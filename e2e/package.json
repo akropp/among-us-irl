@@ -1,0 +1,17 @@
+{
+  "name": "among-us-irl-e2e-tests",
+  "version": "1.0.0",
+  "description": "End-to-end tests for Among Us IRL platform",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "cypress run",
+    "test:admin": "cypress run --spec \"cypress/e2e/admin/**/*.cy.js\"",
+    "test:player": "cypress run --spec \"cypress/e2e/player/**/*.cy.js\"",
+    "test:game-flow": "cypress run --spec \"cypress/e2e/game-flow/**/*.cy.js\""
+  },
+  "dependencies": {
+    "cypress": "^12.5.0"
+  }
+}

@@ -1,0 +1,264 @@
+/* Base styles for Among Us IRL Player Console - Mobile optimized */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body {
+  font-family: 'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #121212;
+  color: #ffffff;
+  touch-action: manipulation;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, a {
+  cursor: pointer;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1d2029;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Among Us color classes */
+.color-red { color: #F22929; }
+.color-blue { color: #31A2F2; }
+.color-green { color: #5DF243; }
+.color-pink { color: #F261D4; }
+.color-orange { color: #F28422; }
+.color-yellow { color: #F2BF27; }
+.color-black { color: #3F474E; }
+.color-white { color: #D7E1F1; }
+.color-purple { color: #8F2BF2; }
+.color-brown { color: #916359; }
+.color-cyan { color: #44E5EA; }
+.color-lime { color: #B8F243; }
+
+.bg-red { background-color: #F22929; }
+.bg-blue { background-color: #31A2F2; }
+.bg-green { background-color: #5DF243; }
+.bg-pink { background-color: #F261D4; }
+.bg-orange { background-color: #F28422; }
+.bg-yellow { background-color: #F2BF27; }
+.bg-black { background-color: #3F474E; }
+.bg-white { background-color: #D7E1F1; }
+.bg-purple { background-color: #8F2BF2; }
+.bg-brown { background-color: #916359; }
+.bg-cyan { background-color: #44E5EA; }
+.bg-lime { background-color: #B8F243; }
+
+/* Animation for emergency meeting and kill effects */
+@keyframes emergency-flash {
+  0%, 100% { background-color: #1d2029; }
+  50% { background-color: #F22929; }
+}
+
+.emergency-flash {
+  animation: emergency-flash 1s infinite;
+}
+
+/* Kill animation */
+@keyframes kill-animation {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.kill-animation {
+  animation: kill-animation 0.5s ease-in-out;
+}
+
+/* Task bar animation */
+@keyframes task-progress {
+  0% { width: 0%; }
+}
+
+.task-progress-bar {
+  height: 8px;
+  background-color: #5DF243;
+  border-radius: 4px;
+  animation: task-progress 2s ease-out;
+}
+
+/* Card transitions */
+.card-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.card-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Full screen button */
+.fullscreen-button {
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(29, 32, 41, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border: none;
+  outline: none;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Prevent text selection */
+.no-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding: 12px;
+  }
+}
+
+/* Dead player effect */
+.dead-player {
+  filter: grayscale(80%) brightness(70%);
+}
+
+/* QR Scanner styles */
+.qr-scanner-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.qr-scanner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid rgba(93, 242, 67, 0.7);
+  border-radius: 12px;
+  box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+}
+
+/* Bottom navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Chat bubble styles */
+.chat-bubble {
+  padding: 10px 16px;
+  border-radius: 16px;
+  margin-bottom: 8px;
+  max-width: 85%;
+  word-break: break-word;
+}
+
+.chat-bubble.own {
+  background-color: #1d2029;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.other {
+  background-color: #2a2e3d;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+/* Task indicator */
+.task-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.task-indicator.completed {
+  background-color: #5DF243;
+}
+
+.task-indicator.incomplete {
+  background-color: #F22929;
+}
+
+/* Vibration effect for buttons */
+@keyframes vibrate {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.vibrate-button:active {
+  animation: vibrate 0.3s linear;
+}

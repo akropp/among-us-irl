@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongo:
+    image: mongo:5.0
+    container_name: among-us-irl-mongo
+    restart: unless-stopped
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - among-us-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-adminpassword}
+
+  # Backend API Server
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: among-us-irl-server
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    ports:
+      - "4000:4000"
+    networks:
+      - among-us-network
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME:-admin}:${MONGO_INITDB_ROOT_PASSWORD:-adminpassword}@mongo:27017/amongus?authSource=admin
+      - JWT_SECRET=${JWT_SECRET:-defaultsecret}
+      - PORT=4000
+      - HOME_ASSISTANT_URL=${HOME_ASSISTANT_URL}
+      - HOME_ASSISTANT_TOKEN=${HOME_ASSISTANT_TOKEN}
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+  # Admin Console Frontend
+  admin-console:
+    build:
+      context: ./admin-console
+      dockerfile: Dockerfile
+    container_name: among-us-irl-admin
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "3001:80"
+    networks:
+      - among-us-network
+    environment:
+      - REACT_APP_API_URL=http://localhost:4000
+
+  # Player Console Frontend
+  player-console:
+    build:
+      context: ./player-console
+      dockerfile: Dockerfile
+    container_name: among-us-irl-player
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "3002:80"
+    networks:
+      - among-us-network
+    environment:
+      - REACT_APP_API_URL=http://localhost:4000
+
+networks:
+  among-us-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local

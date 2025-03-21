@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG to PNG Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .converter {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    canvas {
+      border: 1px solid #ddd;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px 0;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .instructions {
+      background-color: #f8f8f8;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Among Us IRL - Logo Converter</h1>
+  
+  <div class="instructions">
+    <h2>Instructions:</h2>
+    <ol>
+      <li>Click the "Convert Admin Logo" and "Convert Player Logo" buttons</li>
+      <li>Right-click on each generated image and select "Save Image As..."</li>
+      <li>Save with the appropriate filename (logo192.png or logo512.png) to the respective public folder</li>
+    </ol>
+  </div>
+
+  <div class="converter">
+    <h2>Admin Console Logos</h2>
+    <img id="adminSvg" src="admin-console/public/logo.svg" style="display: none;">
+    <div>
+      <button onclick="convertSvgToPng('adminSvg', 'adminCanvas192', 192)">Generate Admin logo192.png</button>
+      <canvas id="adminCanvas192" width="192" height="192"></canvas>
+    </div>
+    <div>
+      <button onclick="convertSvgToPng('adminSvg', 'adminCanvas512', 512)">Generate Admin logo512.png</button>
+      <canvas id="adminCanvas512" width="512" height="512"></canvas>
+    </div>
+  </div>
+
+  <div class="converter">
+    <h2>Player Console Logos</h2>
+    <img id="playerSvg" src="player-console/public/logo.svg" style="display: none;">
+    <div>
+      <button onclick="convertSvgToPng('playerSvg', 'playerCanvas192', 192)">Generate Player logo192.png</button>
+      <canvas id="playerCanvas192" width="192" height="192"></canvas>
+    </div>
+    <div>
+      <button onclick="convertSvgToPng('playerSvg', 'playerCanvas512', 512)">Generate Player logo512.png</button>
+      <canvas id="playerCanvas512" width="512" height="512"></canvas>
+    </div>
+  </div>
+
+  <script>
+    function convertSvgToPng(svgId, canvasId, size) {
+      const img = document.getElementById(svgId);
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw the image on the canvas
+      ctx.drawImage(img, 0, 0, size, size);
+      
+      // Show info about saving
+      console.log(`Convert complete for ${canvasId}. Right-click and save.`);
+    }
+
+    // Wait for SVG images to load
+    window.onload = function() {
+      document.getElementById('adminSvg').onload = function() {
+        console.log('Admin SVG loaded');
+      };
+      document.getElementById('playerSvg').onload = function() {
+        console.log('Player SVG loaded');
+      };
+    };
+  </script>
+</body>
+</html>
